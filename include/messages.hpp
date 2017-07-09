@@ -1,6 +1,8 @@
 #ifndef MESSAGES_HPP
 #define MESSAGES_HPP
 
+#include <time.h>
+
 #include <iostream>
 #include <iomanip>
 #include <ctime>
@@ -16,12 +18,14 @@
 
 struct datetime
 {
-  struct tm cdt;
+  time_t time_since_epoch;
   unsigned short millisecs;
 
   void make_datetime(char* dt)
   {
+    struct tm cdt = {0};
     strptime(dt, "%Y-%m-%d %H:%M:%S", &cdt);
+    time_since_epoch = mktime(&cdt);
     char * dummy_str;
     dt = dt+20;
     millisecs = (unsigned short)strtol(dt, &dummy_str, 10);
@@ -31,44 +35,25 @@ struct datetime
   datetime()
   {
     millisecs = 0;
+    time_since_epoch = 0;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const datetime& t)
   {
+    struct tm* cdt;
+    cdt = localtime(&t.time_since_epoch);
     char buff[20];
-    strftime(buff, 20, "%Y-%m-%d %H:%M:%S", &t.cdt);
+    strftime(buff, 20, "%Y-%m-%d %H:%M:%S", cdt);
     os << buff << "." << std::setfill ('0') << std::setw(3) << t.millisecs;
     return os;
   }
   // we are curently not considering day lights savings
   inline bool operator <(datetime& other)
   {
-    if (this->cdt.tm_year < other.cdt.tm_year)
+    if (this->time_since_epoch < other.time_since_epoch)
       return true;
-    else if (this->cdt.tm_year == other.cdt.tm_year &&
-	     this->cdt.tm_yday < other.cdt.tm_yday )
-      return true;
-    else if (this->cdt.tm_year == other.cdt.tm_year &&
-	     this->cdt.tm_yday == other.cdt.tm_yday &&
-	     this->cdt.tm_hour < other.cdt.tm_hour)
-      return true;
-    else if (this->cdt.tm_year == other.cdt.tm_year &&
-	     this->cdt.tm_yday == other.cdt.tm_yday &&
-	     this->cdt.tm_hour == other.cdt.tm_hour &&
-	     this->cdt.tm_min < other.cdt.tm_min)
-      return true;
-    else if (this->cdt.tm_year == other.cdt.tm_year &&
-	     this->cdt.tm_yday == other.cdt.tm_yday &&
-	     this->cdt.tm_hour == other.cdt.tm_hour &&
-	     this->cdt.tm_min  == other.cdt.tm_min &&
-	     this->cdt.tm_sec < other.cdt.tm_sec)
-      return true;
-    else if (this->cdt.tm_year == other.cdt.tm_year &&
-	     this->cdt.tm_yday == other.cdt.tm_yday &&
-	     this->cdt.tm_hour == other.cdt.tm_hour &&
-	     this->cdt.tm_min  == other.cdt.tm_min &&
-	     this->cdt.tm_sec == other.cdt.tm_sec &&
-	     this->millisecs < other.millisecs)
+    else if(this->time_since_epoch == other.time_since_epoch &&
+	    this->millisecs < other.millisecs)
       return true;
     else
       return false;
