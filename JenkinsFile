@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -22,5 +23,11 @@ pipeline {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
             }
         }
+        environment("Environemnt variables") { 
+			    sh 'echo $PATH'
+			    sh 'ls -alrt'
+			    sh 'ansible --version'
+			    sh 'which ansible'
+		}
     }
 }
