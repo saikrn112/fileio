@@ -2,8 +2,8 @@
 
 - name: Moving the file map.yaml to ansible
   copy:
-    src: {{ lookup('env','JENKINS_HOME') }}/jobs/{{ lookup('env','JOB_NAME') }}/{{ lookup('env','BUILD_NUMBER') }}/archive/build/src/serialize
-    dest: /home/bhagyasyam/containers/serializer_{{ lookup('env','BUILD_NUMBER') }}
+    src: "{{ lookup('env','JENKINS_HOME') }}/jobs/{{ lookup('env','JOB_NAME') }}/{{ lookup('env','BUILD_NUMBER') }}/archive/build/src/serialize"
+    dest: "/home/bhagyasyam/containers/serializer_{{ lookup('env','BUILD_NUMBER') }}""
     mode: 0644
 - name: Looking up the build tag etc
   debug: msg="{{ lookup('env','BUILD_TAG') }}"
