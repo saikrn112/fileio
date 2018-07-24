@@ -29,6 +29,14 @@ pipeline {
 			    sh 'which ansible'
 			}
         }
+        stage('Actually building'){
+        	steps{
+        		sh 'mkdir build'
+        		sh 'cd build'
+        		sh 'cmake ..'
+        		sh 'make -j8'
+        	}
+        }
 
     }
 }
