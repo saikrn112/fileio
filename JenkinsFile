@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Actually building'){
         	steps{
-        		sh 'mkdir -p build && cd ./build'
+        		sh 'mkdir -p build && cd build'
         		sh 'pwd'
         		sh 'cmake ..'
         		sh 'make -j8'
