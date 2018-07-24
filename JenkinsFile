@@ -11,9 +11,12 @@ pipeline {
         	}       	
         }
         stage('Ansible Playbook Lauch'){
-            steps{
-                sh 'echo $WORKSPACE'
-            }
+            ansiblePlaybook(
+                inventory: '$WORKSPACE/jenkins_integration/inventory.ini'
+                limit: '${HOSTS}'
+                playbook: ${WORKSPACE}jenkins_integration/site.yml
+                colorized:true
+            )
         }
         stage('Artifacts '){
         	steps{ 
