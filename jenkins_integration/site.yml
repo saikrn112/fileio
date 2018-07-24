@@ -1,4 +1,4 @@
-- hosts: somidi
+- hosts: localhost
   roles:
     - jenkins
   tags: jenkins
