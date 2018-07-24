@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Artifacts '){
         	steps{ 
-        		archiveArtifacts artifacts: '*serialize'
+        		archiveArtifacts artifacts: 'build/src/serialize'
         	}       	
         }
     }
