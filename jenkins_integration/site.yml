@@ -1,4 +1,5 @@
 - hosts: remote
+  connection: local
   roles:
     - jenkins
   tags: jenkins
