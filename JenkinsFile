@@ -31,13 +31,7 @@ pipeline {
         }
         stage('Actually building'){
         	steps{
-        		sh 'mkdir -p build '
-        		dir('build'){
-        			sh 'cmake ..'
-        			sh 'make -j8'
-        		}
-        		dir('directoryToDelete') {
-    				deleteDir()
+        		sh './build.sh'
 				}	
         	}
         	
