@@ -33,7 +33,7 @@ pipeline {
         	steps{
         		sh 'mkdir -p build '
         		dir('build'){
-        			sh 'cmake .'
+        			sh 'cmake ..'
         			sh 'make -j8'
         		}
         		dir('directoryToDelete') {
