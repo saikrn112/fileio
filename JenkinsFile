@@ -10,6 +10,11 @@ pipeline {
         		sh './build.sh'
         	}       	
         }
+        stage('Storing Artifacts'){
+            steps{ 
+                archiveArtifacts artifacts: 'build/src/serialize'
+            }           
+        }
         stage('Ansible Playbook Launch'){
             steps{
                 ansiblePlaybook(
@@ -18,12 +23,6 @@ pipeline {
                     colorized: false
                 )
             }
-            
-        }
-        stage('Artifacts '){
-        	steps{ 
-        		archiveArtifacts artifacts: 'build/src/serialize'
-        	}       	
         }
     }
 }
