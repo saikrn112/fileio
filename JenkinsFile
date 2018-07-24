@@ -6,6 +6,7 @@ pipeline {
         	steps{
         		sh 'pwd'
         		sh 'ls -alrt'
+        		sh 'chmod 777 build.sh'
         		sh './build.sh'
         	}       	
         }
