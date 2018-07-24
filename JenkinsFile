@@ -26,17 +26,16 @@ pipeline {
 			    sh 'ansible --version'
 			    sh 'which ansible'
             }
+        	
+
+        }
+        stage('Actually building'){
         	steps{
         		sh 'mkdir -p build '
         		sh 'cmake .'
         		sh 'make -j8'
         	}
-
-        }
-        stage('Actually building'){
-        	steps {
-                echo 'Deploying....'
-            }
+        	deleteWs()
         }
 
     }
