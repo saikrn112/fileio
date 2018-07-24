@@ -2,12 +2,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Actually building'){
+        stage('Building'){
         	steps{
         		sh 'pwd'
         		sh 'chmod 777 build.sh'
         		sh 'ls -alrt'
         		sh './build.sh'
+        	}       	
+        }
+        stage('Artifacts '){
+        	steps{ 
+        		archiveArtifacts artifacts: 'build/src/serialize'
         	}       	
         }
     }
