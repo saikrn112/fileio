@@ -5,8 +5,8 @@ pipeline {
         stage('Actually building'){
         	steps{
         		sh 'pwd'
-        		sh 'ls -alrt'
         		sh 'chmod 777 build.sh'
+        		sh 'ls -alrt'
         		sh './build.sh'
         	}       	
         }
