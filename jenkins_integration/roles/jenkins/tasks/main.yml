@@ -1,0 +1,9 @@
+---
+
+- name: Moving the file map.yaml to ansible
+  copy:
+    src: /home/bhagyasyam/map.yaml
+    dest: /home/bhagyasyam/containers/map.yaml
+    mode: 0644
+- name: Looking up the build tag etc
+  debug: msg="{{ lookup('env','BUILD_TAG') }}"
