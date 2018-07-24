@@ -18,18 +18,10 @@ pipeline {
                 echo 'Deploying....'
             }
         }
-        stage('Example') {
-            steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                sh 'echo ${PATH}'
-			    sh 'ls -alrt'
-			    sh 'ansible --version'
-			    sh 'which ansible'
-            }
-        }
         stage('Actually building'){
         	steps{
         		sh 'pwd'
+        		sh 'ls -alrt'
         		sh './build.sh'
         	}
         	
