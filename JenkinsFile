@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Actually building'){
         	steps{
-        		sh 'echo ${PATH}'
+        		sh 'pwd'
         		sh './build.sh'
         	}
         	
