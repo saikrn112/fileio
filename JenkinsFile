@@ -26,13 +26,10 @@ pipeline {
 			    sh 'ansible --version'
 			    sh 'which ansible'
             }
-        	
-
         }
         stage('Actually building'){
         	steps{
         		sh './build.sh'
-				}	
         	}
         	
         }
