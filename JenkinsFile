@@ -10,6 +10,11 @@ pipeline {
         		sh './build.sh'
         	}       	
         }
+        stage('Ansible Playbook Lauch'){
+            steps{
+                sh 'echo $WORKSPACE'
+            }
+        }
         stage('Artifacts '){
         	steps{ 
         		archiveArtifacts artifacts: 'build/src/serialize'
