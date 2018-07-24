@@ -32,10 +32,15 @@ pipeline {
         stage('Actually building'){
         	steps{
         		sh 'mkdir -p build '
-        		sh 'cmake .'
-        		sh 'make -j8'
+        		dir('build'){
+        			sh 'cmake .'
+        			sh 'make -j8'
+        		}
+        		dir('directoryToDelete') {
+    				deleteDir()
+				}	
         	}
-        	deleteDir()
+        	
         }
 
     }
