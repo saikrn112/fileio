@@ -17,11 +17,15 @@ pipeline {
         }
         stage('Ansible Playbook Launch'){
             steps{
-                ansiblePlaybook(
-                    inventory: '$WORKSPACE/jenkins_integration/inventory.ini',
-                    playbook: '${WORKSPACE}/jenkins_integration/site.yml',
-                    colorized: false
-                )
+                dir($WORKSPACE/jenkins_integration){
+                    ansiblePlaybook(
+                        inventory: '$WORKSPACE/jenkins_integration/inventory.ini',
+                        playbook: '${WORKSPACE}/jenkins_integration/site.yml',
+                        colorized: false,
+                        extras: ""
+                    )
+                }
+                
             }
         }
     }
