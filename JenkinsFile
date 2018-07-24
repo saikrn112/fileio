@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Actually building'){
         	steps{
-        		sh 'mkdir build'
+        		sh 'mkdir -p build'
         		sh 'cd build'
         		sh 'pwd'
         		sh 'cmake ..'
