@@ -31,7 +31,7 @@ pipeline {
         	steps{
         		sh 'mkdir -p build'
         		sh 'pwd'
-        		sh 'cd build'
+        		sh 'cd ./build'
         		sh 'pwd'
         		sh 'cmake ..'
         		sh 'make -j8'
