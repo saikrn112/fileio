@@ -14,7 +14,7 @@ pipeline {
             steps{
                 ansiblePlaybook(
                     inventory: '$WORKSPACE/jenkins_integration/inventory.ini',
-                    playbook: '${WORKSPACE}jenkins_integration/site.yml',
+                    playbook: '${WORKSPACE}/jenkins_integration/site.yml',
                     colorized: true
                 )
             }
