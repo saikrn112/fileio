@@ -15,6 +15,9 @@ pipeline {
                 archiveArtifacts artifacts: 'build/src/serialize'
             }           
         }
+        stage('Deploy approval'){
+            input "Deploy to prod?"
+        }
         stage('Ansible Playbook Launch'){
             steps{
                 dir("${env.WORKSPACE}/jenkins_integration"){
