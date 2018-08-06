@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage('Building'){
+        	steps{
+        		sh 'pwd'
+        		sh 'chmod 777 build.sh'
+        		sh 'ls -alrt'
+        		sh './build.sh'
+        	}       	
+        }
+        stage('Storing Artifacts'){
+            steps{ 
+                archiveArtifacts artifacts: 'build/src/serialize'
+            }           
+        }
+        stage('Version Number'){
+            steps{input "Deploy to prod?"}
+        }
+        
+        
+        stage('Deploy approval'){
+            steps{input "Deploy to prod?"}
+        }
+        
+        stage('Ansible Playbook Launch'){
+            steps{
+                dir("${env.WORKSPACE}/jenkins_integration"){
+                    ansiblePlaybook(
+                        inventory: '$WORKSPACE/jenkins_integration/inventory.ini',
+                        playbook: '${WORKSPACE}/jenkins_integration/site.yml',
+                        colorized: false
+                    )
+                }
+                
+            }
+        }
+        
+    }
+}

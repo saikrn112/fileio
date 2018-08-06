@@ -1,34 +1,30 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Building'){
-        	steps{
-        		sh 'pwd'
-        		sh 'chmod 777 build.sh'
-        		sh 'ls -alrt'
-        		sh './build.sh'
-        	}       	
-        }
+    parameters {
+        choice(name: 'door_choice',
+            choices: 'one\ntwo\nthree\nfour',
+            description: 'What door do you choose?')
+        booleanParam(name: 'CAN_DANCE',
+            defaultValue: true, 
+            description: 'Checkbox parameter')
+        string(name: 'sTrAnGePaRaM',
+            defaultValue: 'Dance!',
+            description: 'Do the funky Chicken!')
+    
         stage('Storing Artifacts'){
             steps{ 
                 archiveArtifacts artifacts: 'build/src/serialize'
             }           
         }
+        stage('Version Number'){
+            steps{input "Deploy to prod?"}
+        }
+        
+        
         stage('Deploy approval'){
             steps{input "Deploy to prod?"}
         }
-        stage('Ansible Playbook Launch'){
-            steps{
-                dir("${env.WORKSPACE}/jenkins_integration"){
-                    ansiblePlaybook(
-                        inventory: '$WORKSPACE/jenkins_integration/inventory.ini',
-                        playbook: '${WORKSPACE}/jenkins_integration/site.yml',
-                        colorized: false
-                    )
-                }
-                
-            }
-        }
+
+        
     }
 }
